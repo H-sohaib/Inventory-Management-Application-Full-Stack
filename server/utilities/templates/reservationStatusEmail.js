@@ -18,25 +18,25 @@
  * @returns {string} HTML email content
  */
 const generateReservationStatusEmail = (data) => {
-  const { 
-    recipientName, 
-    studentName, 
-    responsableName, 
-    reservationId, 
-    equipment, 
-    startDate, 
-    endDate, 
+  const {
+    recipientName,
+    studentName,
+    responsableName,
+    reservationId,
+    equipment,
+    startDate,
+    endDate,
     status,
     isResponsable
   } = data;
-  
+
   const formattedStartDate = new Date(startDate).toLocaleDateString('en-US', {
     weekday: 'long',
     year: 'numeric',
     month: 'long',
     day: 'numeric'
   });
-  
+
   const formattedEndDate = new Date(endDate).toLocaleDateString('en-US', {
     weekday: 'long',
     year: 'numeric',
@@ -45,7 +45,7 @@ const generateReservationStatusEmail = (data) => {
   });
 
   // Create equipment list HTML
-  const equipmentListHTML = equipment.map(item => 
+  const equipmentListHTML = equipment.map(item =>
     `<tr>
       <td style="padding: 10px; border-bottom: 1px solid #eee;">${item.name}</td>
       <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: center;">${item.quantity || 1}</td>
@@ -56,20 +56,20 @@ const generateReservationStatusEmail = (data) => {
   const isApproved = status === 'validee';
   const statusColor = isApproved ? '#27ae60' : '#e74c3c';
   const statusText = isApproved ? 'Approved' : 'Rejected';
-  const statusExplanation = isApproved 
+  const statusExplanation = isApproved
     ? 'Your reservation has been approved. You can collect the equipment on the scheduled date.'
     : 'Your reservation has been rejected. Please contact support for more information.';
-  
+
   // Recipient-specific content
   const messageIntro = isResponsable
     ? `You have ${isApproved ? 'approved' : 'rejected'} the following reservation request from ${studentName}.`
     : `${responsableName} has ${isApproved ? 'approved' : 'rejected'} your equipment reservation request.`;
-    
+
   const nextSteps = isResponsable
     ? `An email has been automatically sent to ${studentName} informing them of this decision.`
-    : (isApproved 
-        ? 'You can collect your equipment from the technician\'s office during operating hours on the start date. Please bring your student ID and mention your reservation number.'
-        : 'If you have any questions about why your reservation was rejected or would like to submit a modified request, please contact the equipment management team.');
+    : (isApproved
+      ? 'You can collect your equipment from the technician\'s office during operating hours on the start date. Please bring your student ID and mention your reservation number.'
+      : 'If you have any questions about why your reservation was rejected or would like to submit a modified request, please contact the equipment management team.');
 
   // HTML template with inline CSS for email compatibility
   return `

@@ -178,7 +178,7 @@ const createReservation = async (req, res) => {
     if (userDetails.length > 0) {
       const studentEmail = userDetails[0].email;
       const studentFullName = `${userDetails[0].prenom} ${userDetails[0].nom}`;
-      
+
       // Generate email content
       const emailContent = generateReservationEmail({
         studentName: studentFullName,
@@ -190,7 +190,7 @@ const createReservation = async (req, res) => {
         startDate: date_debut,
         endDate: date_fin
       });
-      
+
       // Send the confirmation email
       try {
         await sendEmail({
@@ -334,11 +334,11 @@ const createBatchReservation = async (req, res) => {
       'SELECT email, nom, prenom FROM Utilisateur WHERE id = ?',
       [id_utilisateur]
     );
-    
+
     if (userDetails.length > 0) {
       const studentEmail = userDetails[0].email;
       const studentFullName = `${userDetails[0].prenom} ${userDetails[0].nom}`;
-      
+
       // Format equipment items for the email
       const equipmentItems = await Promise.all(items.map(async (item) => {
         const [equipResult] = await connection.execute(
@@ -350,7 +350,7 @@ const createBatchReservation = async (req, res) => {
           quantity: item.quantite || 1
         };
       }));
-      
+
       // Generate email content
       const emailContent = generateReservationEmail({
         studentName: studentFullName,
@@ -359,7 +359,7 @@ const createBatchReservation = async (req, res) => {
         startDate: date_debut,
         endDate: date_fin
       });
-      
+
       // Send the confirmation email
       try {
         await sendEmail({
@@ -607,7 +607,7 @@ const updateReservationStatus = async (req, res) => {
           ]
         );
       }
-      
+
       // 3. Send rejection emails to student and responsable
       if (studentEmail) {
         // Generate email for student

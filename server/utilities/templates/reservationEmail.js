@@ -21,7 +21,7 @@ const generateReservationEmail = (data) => {
     month: 'long',
     day: 'numeric'
   });
-  
+
   const formattedEndDate = new Date(endDate).toLocaleDateString('en-US', {
     weekday: 'long',
     year: 'numeric',
@@ -30,7 +30,7 @@ const generateReservationEmail = (data) => {
   });
 
   // Create equipment list HTML
-  const equipmentListHTML = equipment.map(item => 
+  const equipmentListHTML = equipment.map(item =>
     `<tr>
       <td style="padding: 10px; border-bottom: 1px solid #eee;">${item.name}</td>
       <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: center;">${item.quantity || 1}</td>
